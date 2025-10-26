@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard - Smart Traffic Analyzer{% endblock %}
+
+{% block content %}
+    <h1>Analytics Dashboard</h1>
+    <p style="font-size: 1.05rem; margin-bottom: 24px; color: var(--text-secondary);">Comprehensive traffic analysis and visualizations</p>
+
+    <div class="card">
+      <h3>📋 Summary Report</h3>
+      <pre>{{ summary }}</pre>
+    </div>
+
+    {% if images|length > 0 %}
+      <div class="card">
+        <h3>📈 Visualizations</h3>
+        <div class="images">
+          {% for img in images %}
+            <div>
+              <img src="{{ url_for('static', filename=img.split('static/')[-1]) }}" alt="Traffic Analysis Chart" />
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+
+    <div style="margin-top: 32px; text-align: center;">
+      <a href="/" style="padding: 12px 24px; background: var(--bg-secondary); border: 1.5px solid var(--border-normal); border-radius: 8px; display: inline-block;">← Back to Home</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Predict Congestion - Smart Traffic Analyzer{% endblock %}
+
+{% block content %}
+    <h1>Predict Congestion</h1>
+    <p style="font-size: 1.05rem; margin-bottom: 24px; color: var(--text-secondary);">Enter traffic parameters to predict congestion levels</p>
+
+    <form method="post" class="card">
+      <label>⏰ Hour of Day (0-23)</label>
+      <input name="hour" type="number" min="0" max="23" placeholder="e.g., 8 for 8 AM" required>
+
+      <label>🌤️ Weather Condition</label>
+      <input name="weather" type="text" placeholder="e.g., Clear, Clouds, Rain, Snow" required>
+
+      <label>🚗 Vehicle Count (approximate)</label>
+      <input name="vehicle_count" type="number" placeholder="e.g., 150" required>
+
+      <button type="submit">🎯 Predict Congestion</button>
+    </form>
+
+    {% if result %}
+      <div class="card" style="margin-top: 24px; text-align: center; padding: 40px 24px;">
+        <h2 style="margin-bottom: 16px;">📊 Prediction Result</h2>
+        <p style="font-size: 2rem; font-weight: 700; color: var(--accent-blue-light); margin: 0;">{{ result }}</p>
+      </div>
+    {% endif %}
+
+    <div style="margin-top: 32px; text-align: center;">
+      <a href="/" style="padding: 12px 24px; background: var(--bg-secondary); border: 1.5px solid var(--border-normal); border-radius: 8px; display: inline-block;">← Back to Home</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Alerts - Smart Traffic Analyzer{% endblock %}
+
+{% block content %}
+    <h1>System Alerts</h1>
+    <p style="font-size: 1.05rem; margin-bottom: 24px; color: var(--text-secondary);">Real-time notifications and traffic warnings</p>
+
+    {% if alerts|length == 0 %}
+      <div class="card" style="text-align: center; padding: 48px 24px;">
+        <div style="font-size: 4rem; margin-bottom: 16px;">✅</div>
+        <h3>No Active Alerts</h3>
+        <p style="margin: 0; color: var(--text-muted);">All systems are running smoothly</p>
+      </div>
+    {% else %}
+      <ul style="list-style: none; padding: 0;">
+        {% for a in alerts %}
+          <li class="card">
+            <strong style="color: var(--accent-blue-light);">{{ a.time }}</strong>
+            <span style="color: var(--text-muted); margin: 0 8px;">—</span>
+            <span style="color: var(--text-secondary);">{{ a.message }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    <div style="margin-top: 32px; text-align: center;">
+      <a href="/" style="padding: 12px 24px; background: var(--bg-secondary); border: 1.5px solid var(--border-normal); border-radius: 8px; display: inline-block;">← Back to Home</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block title %}Live Traffic - Smart Traffic Analyzer{% endblock %}
+
+{% block content %}
+    <h1>Live Traffic Analysis</h1>
+    <p style="font-size: 1.05rem; margin-bottom: 24px; color: var(--text-secondary);">Real-time traffic conditions and route information</p>
+
+    {% if traffic.error %}
+      <div class="alert alert-error">
+        <strong>⚠️ Error:</strong> {{ traffic.error }}
+      </div>
+    {% else %}
+      <div id="map"></div>
+
+      <div class="stats-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+        <div class="stat-card card">
+          <h3>🚦 Normal Time</h3>
+          <p style="font-size: 1.8rem; font-weight: 700; margin: 0; color: var(--accent-green);">{{ traffic.normal_time }}</p>
+        </div>
+        <div class="stat-card card">
+          <h3>⚠️ Traffic Time</h3>
+          <p style="font-size: 1.8rem; font-weight: 700; margin: 0; color: var(--accent-orange);">{{ traffic.traffic_time }}</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>🗺️ Route Information</h3>
+        <p style="color: var(--text-secondary);">{{ traffic.summary }}</p>
+      </div>
+
+      {% if weather %}
+        <div class="card">
+          <h3>🌤️ Weather Conditions at Origin</h3>
+          <p><strong style="color: var(--accent-blue-light);">{{ weather.main }}</strong> — {{ weather.description }}</p>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 16px;">
+            <div>
+              <strong>🌡️ Temperature:</strong>
+              <span style="color: var(--accent-orange);">{{ weather.temp }}°C</span>
+            </div>
+            <div>
+              <strong>💧 Humidity:</strong>
+              <span style="color: var(--accent-blue-light);">{{ weather.humidity }}%</span>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endif %}
+
+    <div style="margin-top: 32px; text-align: center;">
+      <a href="/" style="padding: 12px 24px; background: var(--bg-secondary); border: 1.5px solid var(--border-normal); border-radius: 8px; display: inline-block;">← Back to Home</a>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+{% if not traffic.error %}
+<script>
+  function initMap() {
+    const directionsService = new google.maps.DirectionsService();
+    const directionsRenderer = new google.maps.DirectionsRenderer();
+    const map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 7,
+      center: {{ traffic.start_location | tojson }},
+      mapTypeId: 'roadmap'
+    });
+    directionsRenderer.setMap(map);
+
+    const trafficLayer = new google.maps.TrafficLayer();
+    trafficLayer.setMap(map);
+
+    const request = {
+        origin: {{ traffic.start_location | tojson }},
+        destination: {{ traffic.end_location | tojson }},
+        travelMode: 'DRIVING'
+    };
+    directionsService.route(request, function(result, status) {
+        if (status == 'OK') {
+            directionsRenderer.setDirections(result);
+        }
+    });
+  }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key={{ api_key }}&callback=initMap">
+</script>
+{% endif %}
+{% endblock %}

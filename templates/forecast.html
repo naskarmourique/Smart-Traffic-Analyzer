@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}24h Forecast - Smart Traffic Analyzer{% endblock %}
+
+{% block content %}
+    <h1>Next 24 Hours Forecast</h1>
+    <p style="font-size: 1.05rem; margin-bottom: 24px; color: var(--text-secondary);">Predicted vehicle counts with confidence intervals</p>
+
+    <div style="overflow-x: auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>📅 Date & Time</th>
+            <th>🎯 Predicted Count</th>
+            <th>📉 Lower Bound</th>
+            <th>📊 Upper Bound</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in rows %}
+            <tr>
+              <td><strong>{{ r.ds }}</strong></td>
+              <td style="color: var(--accent-blue-light); font-weight: 600;">{{ r.yhat|round(2) }}</td>
+              <td style="color: var(--text-muted);">{{ r.yhat_lower|round(2) }}</td>
+              <td style="color: var(--text-muted);">{{ r.yhat_upper|round(2) }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top: 32px; text-align: center;">
+      <a href="/" style="padding: 12px 24px; background: var(--bg-secondary); border: 1.5px solid var(--border-normal); border-radius: 8px; display: inline-block;">← Back to Home</a>
+    </div>
+{% endblock %}

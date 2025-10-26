@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}Home - Smart Traffic Analyzer{% endblock %}
+
+{% block content %}
+    <h1>Smart Traffic Analyzer</h1>
+    <p style="font-size: 1.1rem; margin-bottom: 32px; color: var(--text-secondary);">Analyze traffic patterns, predict congestion, and monitor real-time conditions with AI-powered insights</p>
+
+    <div class="card">
+      <h3>📁 Upload Historical Data</h3>
+      <p>Upload your traffic CSV file for comprehensive analysis and insights</p>
+      <form action="/analyze" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".csv" required>
+        <button type="submit">🔍 Upload & Analyze</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h3>🗺️ Live Route Analysis</h3>
+      <p>Get real-time traffic conditions and weather information for your route</p>
+      <form action="/live" method="post">
+        <label>Origin Address</label>
+        <input name="origin" type="text" placeholder="Enter starting location..." required>
+        <label>Destination Address</label>
+        <input name="destination" type="text" placeholder="Enter destination..." required>
+        <button type="submit">🚀 Check Live Traffic & Weather</button>
+      </form>
+    </div>
+
+    <div class="stats-grid" style="margin-top: 40px;">
+      <div class="stat-card card">
+        <h3>⚡ Quick Predict</h3>
+        <p style="font-size: 1.2rem; margin: 12px 0;">Congestion predictions</p>
+        <a href="/predict" style="display: inline-block; margin-top: 12px; padding: 10px 20px; background: var(--gradient-secondary); color: white; border-radius: 8px; text-decoration: none;">Get Started →</a>
+      </div>
+      
+      <div class="stat-card card">
+        <h3>📈 24h Forecast</h3>
+        <p style="font-size: 1.2rem; margin: 12px 0;">View future predictions</p>
+        <a href="/forecast" style="display: inline-block; margin-top: 12px; padding: 10px 20px; background: var(--gradient-secondary); color: white; border-radius: 8px; text-decoration: none;">View Forecast →</a>
+      </div>
+      
+      <div class="stat-card card">
+        <h3>🔔 System Alerts</h3>
+        <p style="font-size: 1.2rem; margin: 12px 0;">Monitor notifications</p>
+        <a href="/alerts" style="display: inline-block; margin-top: 12px; padding: 10px 20px; background: var(--gradient-secondary); color: white; border-radius: 8px; text-decoration: none;">View Alerts →</a>
+      </div>
+    </div>
+{% endblock %}
