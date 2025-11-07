@@ -17,20 +17,6 @@ A full-stack web application that analyzes historical traffic data, predicts con
 
 ---
 
-## 📸 Demo
-
-*(This is where you can add screenshots of your application)*
-
-**Home Page**
-![Screenshot of Home Page](placeholder.png)
-
-**Live Traffic Map View**
-![Screenshot of Live Map](placeholder.png)
-
-**Analysis Dashboard**
-![Screenshot of Dashboard](placeholder.png)
-
----
 
 ## 🛠️ Tech Stack
 
